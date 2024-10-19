@@ -40,8 +40,8 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         String token = request.getHeader("authorization");
 
         if(StrUtil.isBlank(token)){
-            response.setStatus(401);
-            return false;
+//            response.setStatus(401);
+            return true;
         }
 
         //2. 基于token获取redis中的用户。
@@ -51,10 +51,9 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         //3. 判断用户是否存在。
         if(userMap.isEmpty()){
 //            //4. 不存在，拦截。
-            response.setStatus(401);
-            return false;
-//            return true;
-
+//            response.setStatus(401);
+//            return false;
+            return true;
         }
 
         //5. 将查询到的hash数据转为UserDTO对象。

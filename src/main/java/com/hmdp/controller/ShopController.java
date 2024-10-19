@@ -28,6 +28,7 @@ public class ShopController {
     public Result queryShopById(@PathVariable("id") Long id) throws InterruptedException {
 
 //        return Result.ok(shopService.getById(id));
+//        System.out.println("id = " + id);
         return shopService.queryById(id);
     }
 
