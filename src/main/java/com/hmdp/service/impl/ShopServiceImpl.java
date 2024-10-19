@@ -45,6 +45,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
     public Shop queryWithMutex(Long id) throws InterruptedException {
         String key = CACHE_SHOP_KEY + id;
+//        System.out.println(key);
         String lockKey = null;
         Shop shop = null;
         try {
@@ -53,7 +54,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
             //2. 判断是否存在。
             if(StrUtil.isNotBlank(shopJson)){
                 //3. 存在，返回。
+//                System.out.println(shopJson);
                 shop = JSONUtil.toBean(shopJson,Shop.class);
+//                System.out.println("shop = " + shop);
                 return shop;
             }
             //判断命中的是否是空字符串。
@@ -63,6 +66,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
             //4. 实现缓存重建。
             //4.1 获取互斥锁。
             lockKey = RedisConstants.LOCK_SHOP_KEY + id;
+//            System.out.println(lockKey);
             boolean flag = tryLock(lockKey);
             //4.2 判断是否获取成功。
             if(flag == false){
@@ -85,7 +89,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
             throw new RuntimeException(e);
         }finally {
             //6. 释放互斥锁。
-            unlock(lockKey);
+//            System.out.println(lockKey);
+            if(lockKey != null)
+                unlock(lockKey);
         }
 
         //8. 返回。
