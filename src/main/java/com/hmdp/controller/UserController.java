@@ -14,14 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-/**
- * <p>
- * 前端控制器
- * </p>
- *
- * @author Zz_muggle
- * @since 2024-10-16
- */
+
 @Slf4j
 @RestController
 @RequestMapping("/user")
